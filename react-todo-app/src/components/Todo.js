@@ -4,21 +4,24 @@ import TodoItems from "./TodoItems";
 const Todo = () => {
   const [toDoList, setToDoList] = useState([]);
   const inputRef = useRef();
-
   const add = () => {
     const inpuText = inputRef.current.value.trim();
     if (inpuText === "") {
       return null;
     }
-
     const newTodo = {
       id: Date.now(),
       text: inpuText,
       isComplate: false,
     };
-
     setToDoList((prev) => [...prev, newTodo]);
     inputRef.current.value = "";
+  };
+
+  const deleteTodo = (id) => {
+    setToDoList((prvTodos) => {
+      return prvTodos.filter((todo) => todo.id !== id);
+    });
   };
 
   return (
@@ -27,7 +30,6 @@ const Todo = () => {
         <img className="w-8" src={TODO_ICON} alt="" />
         <h1 className="text-3xl text-white font-semibold">To Do List</h1>
       </div>
-
       <div className="flex items-center my-7 bg-white rounded-full">
         <input
           ref={inputRef}
@@ -44,11 +46,18 @@ const Todo = () => {
       </div>
       <div>
         {toDoList.map((item, index) => {
-          return <TodoItems key={index} text={item.text} />;
+          return (
+            <TodoItems
+              key={index}
+              text={item.text}
+              id={item.id}
+              isComplate={item.isComplate}
+              deleteTodo ={deleteTodo}
+            />
+          );
         })}
       </div>
     </section>
   );
 };
-
 export default Todo;
