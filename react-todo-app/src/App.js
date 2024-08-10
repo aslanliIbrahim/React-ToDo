@@ -1,7 +1,12 @@
-
-
+import React from "react";
+import Background from "./UI/Background";
+import Todo from './components/Todo'
 function App() {
-  return <div className="bg-slate-950 text-white h-screen">Hellow world</div>;
+  return (
+    <Background>
+      <Todo/>
+    </Background>
+  );
 }
 
 export default App;
