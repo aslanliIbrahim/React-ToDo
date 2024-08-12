@@ -2,7 +2,7 @@ import React, { useRef, useState, useEffect } from "react";
 import TODO_ICON from "../assets/todo_icon.png";
 import TodoItems from "./TodoItems";
 const Todo = () => {
-  const [toDoList, setToDoList] = useState([]);
+  const [toDoList, setToDoList] = useState(localStorage.getItem("todos") ? JSON.parse(localStorage.getItem("todos")) : []);
   const inputRef = useRef();
   const add = () => {
     const inpuText = inputRef.current.value.trim();
@@ -34,10 +34,10 @@ const Todo = () => {
     })
   }
 
-//   useEffect(() => {
-//    console.log(toDoList);
+  useEffect(() => {
+   localStorage.setItem("todos", JSON.stringify(toDoList))
    
-//   }, [toDoList])
+  }, [toDoList])
 
   return (
     <section className="bg-lime-950 place-self-center w-11/12 max-w-md flex flex-col p-7 min-h-[550px] rounded-xl">
