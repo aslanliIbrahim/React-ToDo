@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import TODO_ICON from "../assets/todo_icon.png";
 import TodoItems from "./TodoItems";
 const Todo = () => {
@@ -17,12 +17,27 @@ const Todo = () => {
     setToDoList((prev) => [...prev, newTodo]);
     inputRef.current.value = "";
   };
-
   const deleteTodo = (id) => {
     setToDoList((prvTodos) => {
       return prvTodos.filter((todo) => todo.id !== id);
     });
   };
+
+  const toggle = (id)=>{
+    return setToDoList((prevTodos)=>{
+        return prevTodos.map((todo)=>{
+            if (todo.id === id) {
+                return {...todo, isComplate: !todo.isComplate}
+            }
+            return todo
+        })
+    })
+  }
+
+//   useEffect(() => {
+//    console.log(toDoList);
+   
+//   }, [toDoList])
 
   return (
     <section className="bg-lime-950 place-self-center w-11/12 max-w-md flex flex-col p-7 min-h-[550px] rounded-xl">
@@ -48,11 +63,12 @@ const Todo = () => {
         {toDoList.map((item, index) => {
           return (
             <TodoItems
+              toggle={toggle}
               key={index}
               text={item.text}
               id={item.id}
               isComplate={item.isComplate}
-              deleteTodo ={deleteTodo}
+              deleteTodo={deleteTodo}
             />
           );
         })}
